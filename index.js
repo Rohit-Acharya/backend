@@ -18,7 +18,9 @@ app.use(cors({
   credentials: true,
 }));
 
-
+app.options('*', (req, res) => {
+  res.sendStatus(200);
+});
 app.use(cookieParser());
 app.use(express.json());
 
@@ -47,6 +49,12 @@ connectDB();
 // Routes
 app.use('/api/messages', mailmessage);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://portfolio-seven-inky-37.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
