@@ -10,7 +10,6 @@ import cookieParser from 'cookie-parser';
 const app = express();
 mongoose.set("strictQuery", false);
 
-
 app.use(cors({
   origin: "https://portfolio-seven-inky-37.vercel.app",
   methods: ["GET", "POST", "OPTIONS"],
@@ -21,11 +20,18 @@ app.use(cors({
 app.options('*', (req, res) => {
   res.sendStatus(200);
 });
+
 app.use(cookieParser());
 app.use(express.json());
 
 
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://portfolio-seven-inky-37.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 // MongoDB connection
 const connectDB = async () => {
   try {
@@ -49,12 +55,6 @@ connectDB();
 // Routes
 app.use('/api/messages', mailmessage);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://portfolio-seven-inky-37.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
