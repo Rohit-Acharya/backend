@@ -11,7 +11,13 @@ const app = express();
 mongoose.set("strictQuery", false);
 
 
-app.use(cors());
+app.use(cors({
+  origin: "https://portfolio-seven-inky-37.vercel.app",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+}));
+
 
 app.use(cookieParser());
 app.use(express.json());
