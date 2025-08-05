@@ -45,7 +45,7 @@ export const sendmail = async (req, res) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
+        // await transporter.sendMail(mailOptions);
         res.status(200).json({ message: 'Email sent successfully' });
     } catch (err) {
         console.error(err);
